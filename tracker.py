@@ -20,7 +20,7 @@ def fetch_hours(key):
     url="https://wakatime.com/api/v1/users/current/all_time_since_today?api_key=" + key
     try:
         res=u.urlopen(url,timeout=8)
-        body=json.loads(res.read())
+        body=j.loads(res.read())
         secs =body["data"]["total_seconds"]
         return round(secs/ 3600,1)
     except:
@@ -31,8 +31,7 @@ def fetch_hours(key):
 cmd=sys.argv[1] if len(sys.argv) > 1 else""  #todo divorce from ternary operators .very confusing}:
 if cmd=="status":
     d=load()
-    hours=fetch_hours(d["api_key"]) if d["api_key"] else
-None
+    hours=fetch_hours(d["api_key"]) if d["api_key"] else None
 #pr
     
 
@@ -46,26 +45,26 @@ None
             "checked": checked
         })
         #sort em up by hours 
-    goals.sort(key=lamba x: x["hours"]
+    goals.sort(key=lambda x: x["hours"]
     )
     print(j.dumps({"hours":hours ,"goals":goals}))
 elif cmd=="add":
     label=sys.argv[2]
-    hrs= float(sys.argv[3]
+    hrs= float(sys.argv[3])
     d=load()
     d["goals"].append({"label": label, "hours":hrs})
     save(d)
     print(j.dumps({"ok":True}))
-elif cmd="clear":
+elif cmd == "clear":
     d=load()
     d["goals"]=[]
     save(d)
 
-print(j.dumps({"ok": True}))
+    print(j.dumps({"ok": True}))
 elif cmd=="setkey":
     d=load()
     d["api_key"]=sys.argv[2]
     save(d)
-print(j.dumps({"ok": True}))
+    print(j.dumps({"ok": True}))
 else:
     print(j.dumps({"error":"unknown command"}))
