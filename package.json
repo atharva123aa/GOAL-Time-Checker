@@ -1,0 +1,28 @@
+{
+
+    "name":"hour-tracker",
+    "displayName": "GOAL-hours-tracker",
+    "description":"tracks wakatime/hackatime  hours and check off goalsautomatically",
+
+    "version": "0.0.0.0.0.0.1",
+    "engines": {
+        "vscode":"^1.80.0"
+    },
+    "main":"./extension.js",
+    "activationEvents": ["onStartupFinished"
+    ],
+    "contributes": {
+        "commands":[
+    {
+        "command":   "tracker.setKey",
+         "title":"tracker :Set Wakatime key"},
+         {
+            "command": "tracker.addGoal",
+            "title":"Tracker:Add goal"},
+            { "command":"tracker.clearGoals",
+            "title": "Tracker: Clear goals"}
+            ,
+            {"command":"tracker.show",
+            "title": "Tracker: show Panel"}]}
+         }
+    
