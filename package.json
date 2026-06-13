@@ -4,7 +4,7 @@
     "displayName": "GOAL-hours-tracker",
     "description":"tracks wakatime/hackatime  hours and check off goalsautomatically",
 
-    "version": "0.0.0.0.0.0.1",
+    "version": "0.0.1",
     "engines": {
         "vscode":"^1.80.0"
     },
