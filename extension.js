@@ -8,25 +8,25 @@ const { execFile }=  require('child_process');
 const script=path.join(__dirname,'tracker.py');
 const htmlFile=path.join(__dirname,'panel.html');//call python so i get jasooon:}
 function py(args){ return new Promise((resolve)=>{ execFile('py',[script, ...args],
-  //i am a lil confused wht to use python3 or  py as my editor runs like py '.'.py
+  //i am a lil confused wht to use python3 or  py as my editor runs like py '.'.py and reviewer if you using linux or macos you can try python3 
 
    (err,stdout)=>              { if(err){
     resolve ({error:err.message}); return
     ;}
-    try{ (resolveJSON.parse(stdout));}
-    catch {resolve({error;'py broke jasdfasdjasdfasjd'});}});});}
+    try{ resolve(JSON.parse(stdout));}
+    catch {resolve({error:'py broke jasdfasdjasdfasjd'});}});});}
 
 
     //things are broken here i see later now work html templateing
 function buildPanel(data){
-    let html=fs.readFileSync(htmlFile,utf8);
+    let html=fs.readFileSync(htmlFile,'utf8');
     if(data.error){
         html=html.replace('HOURS_HERE','error')
         html=html.replace('GOALS_HERE',`<P STYLE="COLOR:TOMATO">${data.error}</P>`);
         return html;
     } 
     const hrs=data.hours!= null ?data.hours + ' hrs':'check keys';
-    html=html.replace('HOURS_HERE;,hrs);
+    html=html.replace('HOURS_HERE',hrs);
         if (!data.goals.length){
             html =html.replace('GOALS_HERE','<P ID="EMPTY">NO GOals yet,why:}?</p>');
             return html;}
@@ -47,7 +47,7 @@ function buildPanel(data){
             const name=await vscode.window.showInputBox({prompt:'goal name?'});
             if (!name) return;
             const hrs= await vscode.window.showInputBox({prompt:'hours needed?'});
-            if (!hrs || isNaN(parseFloat(hrs)))){
+            if (!hrs || isNaN(parseFloat(hrs))){
                 vscode.window.showErrorMessage('not a number jasdfajsdafasdjasd');
 return;
             }
@@ -65,13 +65,10 @@ return;
     panel.webview.html=buildPanel(data);
   }));
 
-}
-
-                
-                
+}               
  //11:28               
                 function deactivate() {}
-                Module.exports = {activate, deactivate};
+                module.exports = {activate, deactivate};
 
 
              
