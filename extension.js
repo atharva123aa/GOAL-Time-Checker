@@ -38,5 +38,41 @@ function buildPanel(data){
                 html=html.replace('GOALS_HERE',goals);
                 return  html;
             } 
+    function activate(ctx){ctx.subscriptions.push(vscode.commands.registerCommand('tracker.setKey',async() => {
+        const k=await vscode.window.showInputBox({prompt:'wakatime/hackatime api key'});
+        if (!k) return;
+        await py(['setkey',k]);
+        vscode.window.showInformationMessage('saved!');})); 
+        ctx.subscriptions.push(vscode.commands.registerCommand('tracker.addGoal',async()=>{
+            const name=await vscode.window.showInputBox({prompt:'goal name?'});
+            if (!name) return;
+            const hrs= await vscode.window.showInputBox({prompt:'hours needed?'});
+            if (!hrs || isNaN(parseFloat(hrs)))){
+                vscode.window.showErrorMessage('not a number jasdfajsdafasdjasd');
+return;
+            }
+            await py(['add',name,hrs]);
+            vscode.window.showInformationMessage('added: ' + name);}));
+            ctx.subscriptions.push(vscode.commands.registerCommand
+                ('tracker.clearGoals', async()=>{
+                    await py(['clear']);
+                    vscode.window.showInformationMessage('cleared!!');
+                }));
+  ctx.subscriptions.push(vscode.commands.registerCommand('tracker.show',async ()=>{
+    const panel=vscode.window.createWebviewPanel('tracker','hour tracker',vscode.ViewColumn.One, {}
+    );
+    const data=await py(['status'])
+    panel.webview.html=buildPanel(data);
+  }));
 
+}
+
+                
+                
+ //11:28               
+                function deactivate() {}
+                Module.exports = {activate, deactivate};
+
+
+             
 
