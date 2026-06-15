@@ -1,17 +1,23 @@
 const vscode= require('vscode');
 const { execFile }=  require('child_process');
- const path = require('path');
- const fs=require('fs') ;
+const path = require('path');
+const fs=require('fs') ;
 
 // todo add supp. for various editor too
 
 const script=path.join(__dirname,'tracker.py');
 const htmlFile=path.join(__dirname,'panel.html');//call python so i get jasooon:}
-function py(args){ return new Promise((resolve)=>{ execFile('py',[script, ...args],
+function py(args){
+     return new Promise((resolve)=>{ 
+        const pythonCmd= process.platform === 'win32' ? 'py' :'python3';
+        execFile(pythonCmd,[script, ...args],   
+        
+        
+        
   //i am a lil confused wht to use python3 or  py as my editor runs like py '.'.py and reviewer if you using linux or macos you can try python3 
 
-   (err,stdout)=>              { if(err){
-    resolve ({error:err.message}); return
+   (err,stdout,stderr)=>              { if(err){
+    resolve ({error:stderr || err.message}); return
     ;}
     try{ resolve(JSON.parse(stdout));}
     catch {resolve({error:'py broke jasdfasdjasdfasjd'});}});});}
