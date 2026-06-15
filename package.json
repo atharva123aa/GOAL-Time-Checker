@@ -5,6 +5,14 @@
     "description":"tracks wakatime/hackatime  hours and check off goalsautomatically",
 
     "version": "0.0.1",
+    "publisher": "atharva",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/atharva123aa/GOAL-Time-Checker"
+    },
+
+
+
     "engines": {
         "vscode":"^1.80.0"
     },
