@@ -4,7 +4,7 @@ import os
 import urllib.request as u
 #js callings
 
-data_file=os.path.join(os.path.dirname(__file__),"data.json")
+data_file=os.path.join(os.path.dirname(os.path.abspath(__file__)),"data.json")#claude told me to use abspath as directory brealsorry next time i will try myself
 def load():
     if not os.path.exists(data_file):
         return {"api_key":"","goals":[]}
@@ -17,14 +17,23 @@ def save(d):
     j.dump(d,f,indent=2)
     f.close()
 def fetch_hours(key):
-    url="https://wakatime.com/api/v1/users/current/all_time_since_today?api_key=" + key
+    import base64 as b
+    url="https://wakatime.com/api/v1/users/current/all_time_since_today"
     try:
-        res=u.urlopen(url,timeout=8)
-        body=j.loads(res.read())
-        secs =body["data"]["total_seconds"]
-        return round(secs/ 3600,1)
+        token=b.b64encode(key.encode()).decode()
+        req=u.Request(url)
+        req.add_header("Authorization","Basic" +token )
+        res=u.urlopen(req,timeout=10)
+        body= j.loads(res.read())
+        secs=body["data"]["total_seconds"]
+        return  round(secs/ 3600,1)
     except:
         return None
+
+    
+    
+       #this from orignal doc
+   
         #prob.wrong key or no net  
 
 
